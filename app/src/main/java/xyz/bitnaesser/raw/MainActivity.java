@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnTaskDoneListene
 
     private double balance = 0.0;
     private DiceController diceController;
+    private AsyncTask<String, Void, String> execute;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,8 +37,10 @@ public class MainActivity extends AppCompatActivity implements OnTaskDoneListene
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         DiceController diceController = new DiceController(getApplicationContext(),this);
-        diceController.execute();
+        execute = diceController.execute("test", "test2", "test3", "test4");
+        //diceController.execute();
     }
 
     @Override
@@ -55,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements OnTaskDoneListene
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            goSettings();
+        }else if (id == R.id.action_about) {
+            goAbout();
         }
 
         return super.onOptionsItemSelected(item);

@@ -11,6 +11,7 @@ import java.net.URL;
 
 import xyz.bitnaesser.raw.dice.client.web.BeginSessionResponse;
 import xyz.bitnaesser.raw.dice.client.web.DiceWebAPI;
+import xyz.bitnaesser.raw.dice.client.web.SessionInfo;
 
 /**
  * Created by sushi on 03.06.17.
@@ -22,6 +23,7 @@ public class DiceController extends AsyncTask<String, Void, String> {
     private Context mContext;
     private OnTaskDoneListener onTaskDoneListener;
     private BeginSessionResponse beginSessionResponse;
+    private SessionInfo sessionInfo;
 
     public DiceController(Context context,  OnTaskDoneListener onTaskDoneListener) {
         this.mContext = context;
@@ -34,7 +36,8 @@ public class DiceController extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        beginSessionResponse = DiceWebAPI.BeginSession("26ae3c0fc1064a66982a9dfa21ec22b9");
+        beginSessionResponse = DiceWebAPI.BeginSession(mContext.getString(R.string.dice_api_key));
+        sessionInfo = beginSessionResponse.getSession();
         return String.valueOf(getBalance());
     }
 
