@@ -77,4 +77,5 @@
     <string name="action_about">About</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_donate">Donate</string>
+    <string name="title_activity_fragment">Fragment</string>
 </resources>

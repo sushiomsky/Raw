@@ -48,13 +48,6 @@ public class DonateActivity extends AppCompatActivity {
             }
         });
 
-        requestButton = (Button) findViewById(R.id.sample_request_button);
-        requestButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View v) {
-                handleRequest();
-            }
-        });
-
         donateMessage = (TextView) findViewById(R.id.sample_donate_message);
     }
 
@@ -66,38 +59,6 @@ public class DonateActivity extends AppCompatActivity {
         final String[] addresses = donationAddresses();
 
         BitcoinIntegration.requestForResult(DonateActivity.this, REQUEST_CODE, addresses[0]);
-    }
-
-    private void handleRequest() {
-        try {
-            final String[] addresses = donationAddresses();
-            final NetworkParameters params = Address.getParametersFromAddress(addresses[0]);
-
-            final Protos.Output.Builder output1 = Protos.Output.newBuilder();
-            output1.setAmount(AMOUNT);
-            output1.setScript(ByteString
-                    .copyFrom(ScriptBuilder.createOutputScript(new Address(params, addresses[0])).getProgram()));
-
-            final Protos.Output.Builder output2 = Protos.Output.newBuilder();
-            output2.setAmount(AMOUNT);
-            output2.setScript(ByteString
-                    .copyFrom(ScriptBuilder.createOutputScript(new Address(params, addresses[1])).getProgram()));
-
-            final Protos.PaymentDetails.Builder paymentDetails = Protos.PaymentDetails.newBuilder();
-            paymentDetails.setNetwork(params.getPaymentProtocolId());
-            paymentDetails.addOutputs(output1);
-            paymentDetails.addOutputs(output2);
-            paymentDetails.setMemo(MEMO);
-            paymentDetails.setTime(System.currentTimeMillis());
-
-            final Protos.PaymentRequest.Builder paymentRequest = Protos.PaymentRequest.newBuilder();
-            paymentRequest.setSerializedPaymentDetails(paymentDetails.build().toByteString());
-
-            BitcoinIntegration.requestForResult(DonateActivity.this, REQUEST_CODE,
-                    paymentRequest.build().toByteArray());
-        } catch (final AddressFormatException x) {
-            throw new RuntimeException(x);
-        }
     }
 
     @Override
