@@ -81,4 +81,5 @@
     <string name="dice_api_key">26ae3c0fc1064a66982a9dfa21ec22b9</string>
     <string name="pref_default_display_withdraw_address" />
     <string name="pref_title_display_withdraw_address">Withdraw address</string>
+    <string name="title_activity_settings2">Settings</string>
 </resources>

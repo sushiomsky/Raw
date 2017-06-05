@@ -24,7 +24,7 @@ public class DiceController extends AsyncTask<String, Void, String> {
     private OnTaskDoneListener onTaskDoneListener;
     private BeginSessionResponse beginSessionResponse;
     private SessionInfo sessionInfo;
-
+    private double balance;
     public DiceController(Context context,  OnTaskDoneListener onTaskDoneListener) {
         this.mContext = context;
         this.onTaskDoneListener = onTaskDoneListener;
@@ -36,10 +36,13 @@ public class DiceController extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        beginSessionResponse = DiceWebAPI.BeginSession(mContext.getString(R.string.dice_api_key));
+        beginSessionResponse = DiceWebAPI.BeginSession(mContext.getString(R.string.dice_api_key),"bitnaesser","misty12");
         sessionInfo = beginSessionResponse.getSession();
+        balance = getBalance()-11;
+        publishProgress();
         return String.valueOf(getBalance());
     }
+
 
     @Override
     protected void onPostExecute(String s) {
